@@ -482,7 +482,8 @@
                                 <RowDefinition Height="25" />
                                 <RowDefinition Height="5" />
                                 <RowDefinition Height="25" />
-                                <RowDefinition Height="10" />
+                                <RowDefinition Height="5" />
+                                <RowDefinition Height="25" />
 
                             </Grid.RowDefinitions>
 
@@ -635,6 +636,21 @@
                                 AutoToolTipPrecision="1"
                                 ValueChanged="TabHeaderGapSlider_ValueChanged"
                                 Value="{Binding Source={x:Static properties:Settings.Default}, Path=StashTabOverlayIndividualTabHeaderGap, Mode=TwoWay}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Grid.Row="17"
+                                VerticalAlignment="Center"
+                                Text="Auto Move To Next Item:"
+                                ToolTipService.InitialShowDelay="50"
+                                ToolTip="If checked, moves the mouse to the next highlighted item automatically, you still have to click (probably violates ToS)." />
+
+                            <CheckBox
+                                Grid.Column="3"
+                                Grid.Row="17"
+                                Name="AutoMoveCheckbox"
+                                Width="200"
+                                VerticalAlignment="Center"
+                                IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=AutoMove, Mode=TwoWay}" />
 
                         </Grid>
                         <!-- Stash Tab Overlay Section End -->
