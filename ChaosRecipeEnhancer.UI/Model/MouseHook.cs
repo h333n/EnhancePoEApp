@@ -41,7 +41,7 @@ namespace ChaosRecipeEnhancer.UI.Model
 
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode >= 0 && MouseMessages.WM_LBUTTONDOWN == (MouseMessages)wParam)
+            if (nCode >= 0 && MouseMessages.WM_LBUTTONUP == (MouseMessages)wParam)
             {
                 var hookStruct = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
                 //Trace.WriteLine(hookStruct.pt.x + "x");
@@ -70,10 +70,10 @@ namespace ChaosRecipeEnhancer.UI.Model
         private static extern IntPtr GetModuleHandle(string lpModuleName);
 
         [DllImport("user32.dll", SetLastError = true)]
-        static extern uint SendInput(uint nInputs, ref INPUT pInputs, int cbSize);
+        private static extern uint SendInput(uint nInputs, ref INPUT pInputs, int cbSize);
 
         [DllImport("user32.dll")]
-        static extern int GetSystemMetrics(SystemMetric smIndex);
+        private static extern int GetSystemMetrics(SystemMetric smIndex);
 
         private delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
 
@@ -87,9 +87,6 @@ namespace ChaosRecipeEnhancer.UI.Model
             mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_MOVE | MouseEventFlags.MOUSEEVENTF_ABSOLUTE;
             SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
         }
-
-        private static int? sysmetricX = null;
-        private static int? sysmetricY = null;
 
         private static int CalculateAbsoluteCoordinateX(int x)
         {
