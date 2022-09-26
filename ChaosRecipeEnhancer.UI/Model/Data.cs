@@ -649,15 +649,17 @@ namespace ChaosRecipeEnhancer.UI.Model
 
         private static void MoveMouseToItem(Item item)
         {
-            var overlayX = Settings.Default.StashTabOverlayLeftPosition;
-            var overlayY = Settings.Default.StashTabOverlayTopPosition;
-            var overlayW = Settings.Default.StashTabOverlayWidth;
-            var overlayH = Settings.Default.StashTabOverlayHeight;
+            var margin = 7; // there seem to be a margin of ~7px on the top, botton and on the sides
+            var overlayX = Settings.Default.StashTabOverlayLeftPosition + margin;
+            var overlayY = Settings.Default.StashTabOverlayTopPosition + margin;
+            var overlayW = Settings.Default.StashTabOverlayWidth - margin - margin;
+            var overlayH = Settings.Default.StashTabOverlayHeight - margin- margin;
+            var overlayHeaderH = 50; // height of the header (seems to be fixed ~ 50px)
             var stashtab = StashTabList.StashTabs.First(tab => tab.TabIndex == item.StashTabIndex);
             var gridSize = stashtab.Quad ? 24 : 12;
 
             var x = overlayX + overlayW * ((item.x + (item.w / 2.0)) / gridSize);
-            var y = overlayY + overlayH * ((item.y + (item.h / 2.0)) / gridSize);
+            var y = overlayY + overlayHeaderH + (overlayH - overlayHeaderH) * ((item.y + (item.h / 2.0)) / gridSize);
 
             MouseHook.MoveMouse((int)x, (int)y);
         }
