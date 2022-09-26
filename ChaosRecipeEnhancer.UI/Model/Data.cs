@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -531,7 +532,10 @@ namespace ChaosRecipeEnhancer.UI.Model
                         if (currentTab != null)
                         {
                             currentTab.ActivateItemCells(highlightItem);
-
+                            if (Settings.Default.AutoMove)
+                            {
+                                MoveMouseToItem(highlightItem);
+                            }
                             // if (tabControl != null)
                             // {
                             //     Trace.WriteLine($"[Data: ActivateNextCell()]: TabControl Current Tab Item {tabControl.SelectedItem}");
@@ -641,6 +645,21 @@ namespace ChaosRecipeEnhancer.UI.Model
                     }
                 }
             }
+        }
+
+        private static void MoveMouseToItem(Item item)
+        {
+            var overlayX = Settings.Default.StashTabOverlayLeftPosition;
+            var overlayY = Settings.Default.StashTabOverlayTopPosition;
+            var overlayW = Settings.Default.StashTabOverlayWidth;
+            var overlayH = Settings.Default.StashTabOverlayHeight;
+            var stashtab = StashTabList.StashTabs.First(tab => tab.TabIndex == item.StashTabIndex);
+            var gridSize = stashtab.Quad ? 24 : 12;
+
+            var x = overlayX + overlayW * ((item.x + (item.w / 2.0)) / gridSize);
+            var y = overlayY + overlayH * ((item.y + (item.h / 2.0)) / gridSize);
+
+            MouseHook.MoveMouse((int)x, (int)y);
         }
 
         public static void PrepareSelling()
