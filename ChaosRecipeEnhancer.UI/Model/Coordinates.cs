@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using ChaosRecipeEnhancer.UI.Properties;
 using ChaosRecipeEnhancer.UI.UserControls.StashTabOverlayDisplays;
 using ChaosRecipeEnhancer.UI.View;
 
@@ -161,12 +162,27 @@ namespace ChaosRecipeEnhancer.UI.Model
                         }
 
                     Trace.WriteLine($"[Coordinates:OverlayClickEvent()]: Quad Tab Current Tab Index: {stashTabOverlayView.StashTabOverlayTabControl.SelectedIndex}");
-                    
-                    if (isHit) Data.ActivateNextCell(true, buttonList[hitIndex].Cell, stashTabOverlayView.StashTabOverlayTabControl);
+
+                    if (isHit)
+                    {
+                        Data.ActivateNextCell(true, buttonList[hitIndex].Cell, stashTabOverlayView.StashTabOverlayTabControl);
+                    }
 
                     for (var stash = 0; stash < StashTabList.StashTabs.Count; stash++)
+                    {
+
                         if (CheckForHeaderHit(StashTabList.StashTabs[stash]))
+                        {
                             stashTabOverlayView.StashTabOverlayTabControl.SelectedIndex = stash;
+                            // move mouse to item
+                            if (Settings.Default.AutoMove)
+                            {
+                                var item = Data.CurrentlyHighlightedItem;
+                                MouseMover.MoveMouseToItem(item);
+                            }
+                            break;
+                        }
+                    }
                 }
                 else
                 {
