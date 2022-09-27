@@ -79,6 +79,7 @@ namespace ChaosRecipeEnhancer.UI.Model
 
         public static void MoveMouse(int x, int y)
         {
+            System.Threading.Thread.Sleep(50);
             INPUT mouseInput = new INPUT();
             mouseInput.type = SendInputEventType.InputMouse;
             mouseInput.mkhi.mi.dx = CalculateAbsoluteCoordinateX(x);
