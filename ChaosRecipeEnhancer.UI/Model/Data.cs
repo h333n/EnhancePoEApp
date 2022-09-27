@@ -546,6 +546,7 @@ namespace ChaosRecipeEnhancer.UI.Model
                                 currentTab.TabHeaderColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString(Settings.Default.StashTabOverlayHighlightColor));
                                 if (Settings.Default.AutoMove)
                                 {
+                                    Console.WriteLine($"Move mouse to tab {currentTab} after item hit");
                                     MouseMover.MoveMouseToTab(currentTab);
                                 }
                             }
@@ -554,6 +555,7 @@ namespace ChaosRecipeEnhancer.UI.Model
                                 currentTab.TabHeaderColor = Brushes.Transparent;
                                 if (Settings.Default.AutoMove)
                                 {
+                                    Console.WriteLine($"Move mouse to item {highlightItem} after item hit");
                                     MouseMover.MoveMouseToItem(highlightItem);
                                 }
                             }

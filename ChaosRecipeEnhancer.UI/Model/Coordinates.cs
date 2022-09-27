@@ -178,6 +178,7 @@ namespace ChaosRecipeEnhancer.UI.Model
                             if (Settings.Default.AutoMove)
                             {
                                 var item = Data.CurrentlyHighlightedItem;
+                                Console.WriteLine($"Move mouse to item {item} after stash tab hit (quad)");
                                 MouseMover.MoveMouseToItem(item);
                             }
                             break;
@@ -207,7 +208,17 @@ namespace ChaosRecipeEnhancer.UI.Model
 
                     for (var stash = 0; stash < StashTabList.StashTabs.Count; stash++)
                         if (CheckForHeaderHit(StashTabList.StashTabs[stash]))
+                        {
                             stashTabOverlayView.StashTabOverlayTabControl.SelectedIndex = stash;
+                            // move mouse to item
+                            if (Settings.Default.AutoMove)
+                            {
+                                var item = Data.CurrentlyHighlightedItem;
+                                Console.WriteLine($"Move mouse to item {item} after stash tab hit (non-quad)");
+                                MouseMover.MoveMouseToItem(item);
+                            }
+                        }
+                            
                 }
             }
         }
