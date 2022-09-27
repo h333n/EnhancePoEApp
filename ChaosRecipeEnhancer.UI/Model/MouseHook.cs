@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace ChaosRecipeEnhancer.UI.Model
 {
@@ -79,14 +80,18 @@ namespace ChaosRecipeEnhancer.UI.Model
 
         public static void MoveMouse(int x, int y)
         {
-            System.Threading.Thread.Sleep(50);
-            INPUT mouseInput = new INPUT();
-            mouseInput.type = SendInputEventType.InputMouse;
-            mouseInput.mkhi.mi.dx = CalculateAbsoluteCoordinateX(x);
-            mouseInput.mkhi.mi.dy = CalculateAbsoluteCoordinateY(y);
-            mouseInput.mkhi.mi.mouseData = 0;
-            mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_MOVE | MouseEventFlags.MOUSEEVENTF_ABSOLUTE;
-            SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
+            Task.Run(async () =>
+            {
+                await Task.Delay(200);
+                INPUT mouseInput = new INPUT();
+                mouseInput.type = SendInputEventType.InputMouse;
+                mouseInput.mkhi.mi.dx = CalculateAbsoluteCoordinateX(x);
+                mouseInput.mkhi.mi.dy = CalculateAbsoluteCoordinateY(y);
+                mouseInput.mkhi.mi.mouseData = 0;
+                mouseInput.mkhi.mi.dwFlags = MouseEventFlags.MOUSEEVENTF_MOVE | MouseEventFlags.MOUSEEVENTF_ABSOLUTE;
+                SendInput(1, ref mouseInput, Marshal.SizeOf(new INPUT()));
+            });
+            
         }
 
         private static int CalculateAbsoluteCoordinateX(int x)
